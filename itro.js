@@ -6,8 +6,20 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+function requestLogger(req, res, next) {
+  const startedAt = Date.now();
+
+  res.on('finish', () => {
+    const duration = Date.now() - startedAt;
+    console.log(`${req.method} ${req.originalUrl} ${res.statusCode} - ${duration}ms`);
+  });
+
+  next();
+}
+
 // Middleware
 app.use(cors());
+app.use(requestLogger);
 app.use(express.json());
 
 // JSON parse error handling
