@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node itro.js",
     "dev": "nodemon itro.js",
+    "github:device-auth": "node github-device-auth.js",
     "build": "echo \"Build complete\"",
     "lint": "echo \"No lint configured\"",
     "test": "echo \"No tests specified\""
