@@ -1,0 +1,10 @@
+{
+  "project": "my-api",
+  "plugins": [
+    {
+      "name": "node",
+      "path": ".",
+      "start": "npm start"
+    }
+  ]
+}
