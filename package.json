@@ -2,11 +2,11 @@
   "name": "my-api",
   "version": "1.0.0",
   "description": "A Node.js Express API for Railway/Render deployment.",
-  "main": "itro.js",
+  "main": "task.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node itro.js",
-    "dev": "nodemon itro.js",
+    "start": "node task.js",
+    "dev": "nodemon task.js",
     "github:device-auth": "node github-device-auth.js",
     "build": "echo \"Build complete\"",
     "lint": "echo \"No lint configured\"",
@@ -23,12 +23,12 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/my-api.git"
+    "url": "https://github.com/obaloluwakoyi/task-manager-api-subgroup-b.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/my-api/issues"
+    "url": "https://github.com/obaloluwakoyi/task-manager-api-subgroup-b/issues"
   },
-  "homepage": "https://github.com/your-username/my-api#readme",
+  "homepage": "https://github.com/obaloluwakoyi/task-manager-api-subgroup-b#readme",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",

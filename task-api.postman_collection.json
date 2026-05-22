@@ -1,0 +1,224 @@
+{
+  "info": {
+    "name": "Task CRUD API",
+    "description": "Postman tests for the Express.js Task CRUD API in task.js.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "taskId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Welcome",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('API returns welcome message', function () {",
+              "  const json = pm.response.json();",
+              "  pm.expect(json.message).to.eql('Task API is running');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Create Task",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Learn Postman\",\n  \"description\": \"Test CRUD task API\",\n  \"status\": \"pending\"\n}"
+        },
+        "url": "{{baseUrl}}/tasks"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 201', function () {",
+              "  pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test('Task is created with correct fields', function () {",
+              "  const json = pm.response.json();",
+              "  pm.expect(json).to.have.property('id');",
+              "  pm.expect(json.title).to.eql('Learn Postman');",
+              "  pm.expect(json.description).to.eql('Test CRUD task API');",
+              "  pm.expect(json.status).to.eql('pending');",
+              "  pm.collectionVariables.set('taskId', json.id);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get All Tasks",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/tasks"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Response is an array', function () {",
+              "  const json = pm.response.json();",
+              "  pm.expect(json).to.be.an('array');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Task By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/tasks/{{taskId}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Correct task is returned', function () {",
+              "  const json = pm.response.json();",
+              "  pm.expect(String(json.id)).to.eql(String(pm.collectionVariables.get('taskId')));",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Update Task",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Learn Postman\",\n  \"description\": \"Task API tested successfully\",\n  \"status\": \"completed\"\n}"
+        },
+        "url": "{{baseUrl}}/tasks/{{taskId}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Task is updated', function () {",
+              "  const json = pm.response.json();",
+              "  pm.expect(json.description).to.eql('Task API tested successfully');",
+              "  pm.expect(json.status).to.eql('completed');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Delete Task",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/tasks/{{taskId}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test('Task is deleted', function () {",
+              "  const json = pm.response.json();",
+              "  pm.expect(json.message).to.eql('Task deleted');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Confirm Deleted Task",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/tasks/{{taskId}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 404', function () {",
+              "  pm.response.to.have.status(404);",
+              "});",
+              "",
+              "pm.test('Task not found message is returned', function () {",
+              "  const json = pm.response.json();",
+              "  pm.expect(json.message).to.eql('Task not found');",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

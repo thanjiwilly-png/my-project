@@ -1,95 +1,76 @@
-# My API
+# Task Manager API
 
-A Node.js Express API with CORS support.
+A simple Express.js API for creating, reading, updating, and deleting tasks.
+
+Each task has:
+
+```json
+{
+  "id": 1,
+  "title": "Learn Express",
+  "description": "Build a CRUD API",
+  "status": "pending"
+}
+```
+
+Allowed task statuses:
+
+- `pending`
+- `completed`
 
 ## Setup
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+Install dependencies:
 
-2. **Configure environment:**
-   Copy `.env.example` to `.env` and adjust settings if needed. Set `PORT` in `.env` if you want a custom port.
+```bash
+npm install
+```
 
-## Running Locally
+## Run
 
 ```bash
 npm start
 ```
 
-API will be available at `http://localhost:3000`
+The API runs at:
 
-### Available Endpoints
+```text
+http://localhost:3000
+```
 
-- `GET /` - Welcome message
-- `GET /api/health` - Health check
-- `POST /api/echo` - Echo back posted data
+## Endpoints
 
-## Building
+```text
+GET    /                         API welcome message
+GET    /tasks                    Get all tasks
+GET    /tasks/:id                Get one task
+POST   /tasks                    Create a task
+PUT    /tasks/:id                Update a task
+DELETE /tasks/:id                Delete a task
+GET    /postman-collection       Get the Postman collection JSON
+GET    /postman-collection/download
+```
+
+## Example Create Request
 
 ```bash
-npm run build
+curl -X POST http://localhost:3000/tasks \
+  -H "Content-Type: application/json" \
+  -d "{\"title\":\"Learn Postman\",\"description\":\"Test CRUD task API\",\"status\":\"pending\"}"
 ```
 
-## Deployment
+## Postman Testing
 
-### Option 1: Heroku (Recommended for beginners)
-
-1. Create a Heroku account at https://www.heroku.com
-2. Install Heroku CLI
-3. Login: `heroku login`
-4. Create app: `heroku create your-app-name`
-5. Deploy: `git push heroku main`
-6. View logs: `heroku logs --tail`
-
-### Option 2: Railway
-
-1. Go to https://railway.app and sign in.
-2. Create a new project and choose "Deploy from GitHub".
-3. Connect your repository and select this project.
-4. Railway will detect Node.js automatically. If asked, use `npm install` for install and `npm start` for run.
-5. A `railway.json` file is included in this repo to help Railway understand the Node.js service.
-6. Deploy and open the app URL from Railway.
-
-### Option 3: Render
-
-1. Go to https://render.com and sign in.
-2. Create a new Web Service.
-3. Connect your GitHub repository and select this project.
-4. For Root Directory, choose the project folder if needed.
-5. Set Environment to `Node 18` or auto-detect.
-6. Use `npm install` and `npm start` as the build/start commands if Render doesn't fill them automatically.
-7. A `render.yaml` file is included in this repo for Render service configuration.
-8. Render will use the `render.yaml` file at the repo root. If your repo branch is not `main`, update the `branch` field in `render.yaml`.
-9. Deploy and open the live service URL.
-
-### Option 4: Docker (Local/Cloud)
-
-Create `Dockerfile`:
-```dockerfile
-FROM node:18
-WORKDIR /app
-COPY package*.json ./
-RUN npm install --production
-COPY . .
-EXPOSE 3000
-CMD ["node", "itro.js"]
-```
-
-Build and run:
-```bash
-docker build -t my-api .
-docker run -p 3000:3000 my-api
-```
-
-## Testing
+Start the API first:
 
 ```bash
-curl http://localhost:3000/api/health
+npm start
 ```
 
-## Environment Variables
+Then import this URL in Postman:
 
-- `PORT` - Server port (default: 3000)
-- `NODE_ENV` - Environment (development/production)
+```text
+http://localhost:3000/postman-collection
+```
+
+The Postman collection includes tests for creating, reading, updating, deleting, and confirming deletion of a task.
