@@ -86,3 +86,18 @@ curl -X DELETE http://localhost:3000/todos/1
 ## Environment Variables
 
 - `PORT`: Server port (default: 3000, Render overrides automatically)
+
+## Automatic Deploy via GitHub Actions
+
+This repository includes a GitHub Actions workflow at `.github/workflows/deploy-to-render.yml` that triggers a Render deploy when you push to `main`.
+
+To enable automatic deploys:
+
+1. Create a Render API key: go to Render dashboard → Account → API Keys → New API Key.
+2. Get your Render **Service ID** for the web service (visible in the service's settings or URL, it looks like `srv-xxxxx`).
+3. In your GitHub repository, go to Settings → Secrets and variables → Actions → New repository secret, then add:
+  - `RENDER_API_KEY` — the API key from Render
+  - `RENDER_SERVICE_ID` — the service ID for your web service
+4. Push to `main` and the workflow will trigger a deploy to Render.
+
+If you prefer, you can also deploy manually via the Render web UI and submit the live URL as your assignment link.
