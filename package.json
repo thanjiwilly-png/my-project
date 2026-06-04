@@ -1,0 +1,16 @@
+{
+  "name": "week-3-todo-api",
+  "version": "1.0.0",
+  "description": "Week 3 Todo API for Render deployment",
+  "main": "api.js",
+  "scripts": {
+    "start": "node api.js",
+    "dev": "nodemon api.js"
+  },
+  "dependencies": {
+    "express": "^4.22.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.2"
+  }
+}
